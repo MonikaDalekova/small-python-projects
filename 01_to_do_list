@@ -1,0 +1,87 @@
+def main_menu():
+    print("\n\033[35m***** To Do List Menu *****")
+    print("1. Add new task.")
+    print("2. View all tasks")
+    print("3. Delete task")
+    print("4. Complete task.")
+    print("5. View left tasks.")
+    print("6. Quit the program.")
+
+
+def add_new_task(todo_list):
+    task = input("Please enter your daily task: ")
+    todo_list.append({"task": task, "completed": False})
+    print("Your task is added successfully!")
+
+
+def view_all_tasks(todo_list):
+    print("\n***** Tasks: *****")
+    task_counter = 0
+    for index in range(len(todo_list)):
+        task_counter += 1
+        new_task = todo_list[index]["task"]
+        print(f"{task_counter}. {new_task}")
+
+
+def delete_task(todo_list):
+    view_all_tasks(todo_list)
+    deleted_task = int(input("Please choose the number of task you would like to be deleted: "))
+    if 0 < deleted_task <= len(todo_list):
+        todo_list.pop(deleted_task - 1)
+        print("Your task is deleted successfully!")
+    else:
+        print("No task with such number!")
+
+
+def display_tasks(todo_list):
+    print("\n***** Tasks: *****")
+    for index, task in enumerate(todo_list):
+        status = "[Completed]" if task["completed"] else "[ ]"
+        print(f"Number {(index+1)}. {status} {task['task']}")
+
+
+def completed_task(todo_list):
+    display_tasks(todo_list)
+    number = int(input("Please choose the number of the task you would like to be completed: "))
+    if 0 <= number < len(todo_list):
+        todo_list[number]['completed'] = True
+        print("Your task has been completed successfully.")
+    else:
+        print("Invalid number.")
+
+
+def left_tasks(todo_list):
+    task_counter = 0
+    print("\n***** Left Tasks: *****")
+    for index in range(len(todo_list)):
+        if todo_list[index]["completed"]:
+            new_task = todo_list[index]["task"]
+            task_counter += 1
+            print(f"{task_counter}. {new_task}")
+
+
+def to_do_list_program():
+    todo_list = []
+
+    while True:
+        main_menu()
+        choice = input("Enter your choice (1 - 6): ")
+
+        if choice == "1":
+            add_new_task(todo_list)
+        elif choice == "2":
+            view_all_tasks(todo_list)
+        elif choice == "3":
+            delete_task(todo_list)
+        elif choice == "4":
+            completed_task(todo_list)
+        elif choice == "5":
+            left_tasks(todo_list)
+        elif choice == "6":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please, enter a number between 1 and 6.")
+
+
+to_do_list_program()
